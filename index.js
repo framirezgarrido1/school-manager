@@ -7,9 +7,8 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+const dbName = "school-manager-db";
 const port = 3005;
-
-// Cabeceras HTTP
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -25,8 +24,8 @@ app.get('/api', function(req, res) {
 	res.send('Saludos desde express');
 });	
 
-mongoose.connect('mongodb://localhost/school-manager-db',{ useNewUrlParser: true }).then(() => {
-  console.log("Connected to Database");
+mongoose.connect('mongodb://localhost/'+dbName,{ useNewUrlParser: true }).then(() => {
+  console.log("Connected to Database", dbName);
 
   app.listen(port, () => {
     console.log("El servidor está inicializado en el puerto", port);
