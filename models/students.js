@@ -6,9 +6,9 @@ const Schema = mongoose.Schema
 const StudentsSchema = Schema ({
 	name: String,
 	type: String,
-	pin: Number,
-	status: Number,
-	topic: String
+	level: Number,
+	rut: String,
+	genere: String
 })
 
 module.exports = mongoose.model('Students', StudentsSchema)
