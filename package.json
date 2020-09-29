@@ -1,5 +1,5 @@
 {
-  "name": "school-manager-server-back",
+  "name": "school-manager",
   "version": "1.0.0",
   "description": "Server Manager",
   "main": "index.js",
