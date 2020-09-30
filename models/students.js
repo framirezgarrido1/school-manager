@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 
 const StudentsSchema = Schema ({
 	name: String,
-	level: Number,
+	level: String,
 	rut: String,
 	genere: String
 })

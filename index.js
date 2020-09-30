@@ -36,6 +36,17 @@ app.get('/api/students', function(req, res) {
 
 });	
 
+app.delete('/api/delete/all', function(req, res) {
+
+	Students.remove((err, students ) => {
+		if (err) return res.status(500).send({ message: `Error al realizar la petición` })
+		if (!students) return res.status(500).send({ message: `No existen usuarios` })
+
+		res.status(200).send({students})
+	})
+
+});	
+
 app.post('/api/create', function(req, res) {
 
   let students = new Students()
