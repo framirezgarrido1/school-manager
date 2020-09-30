@@ -5,8 +5,8 @@ const Schema = mongoose.Schema
 
 const StudentsSchema = Schema ({
 	name: String,
-	level: String,
-	rut: String,
+	lastname: String,
+	DNI: String,
 	genere: String
 })
 
