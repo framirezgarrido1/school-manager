@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose')
 const Students = require('./models/students.js')
+const Levels = require('./models/levels.js')
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -36,7 +38,19 @@ app.get('/api/students', function(req, res) {
 
 });	
 
-app.delete('/api/delete/all', function(req, res) {
+app.get('/api/levels', function(req, res) {
+
+	Levels.find((err, levels ) => {
+		if (err) return res.status(500).send({ message: `Error al realizar la petición` })
+		if (!levels) return res.status(500).send({ message: `No existen usuarios` })
+
+		res.status(200).send({levels})
+	})
+
+});	
+
+app.delete('/api/delete/students', function(req, res) {
+
 
 	Students.remove((err, students ) => {
 		if (err) return res.status(500).send({ message: `Error al realizar la petición` })
@@ -47,18 +61,45 @@ app.delete('/api/delete/all', function(req, res) {
 
 });	
 
-app.post('/api/create', function(req, res) {
+app.delete('/api/delete/levels', function(req, res) {
+
+
+	Levels.remove((err, levels ) => {
+		if (err) return res.status(500).send({ message: `Error al realizar la petición` })
+		if (!levels) return res.status(500).send({ message: `No existen usuarios` })
+
+		res.status(200).send({levels})
+	})
+
+});	
+
+app.post('/api/create/level', function(req, res) {
+
+  let levels = new Levels()
+  levels.number = req.body.number
+  levels.letter = req.body.letter
+  levels.cicle = req.body.cicle
+
+  levels.save((err, createLevels) => {
+    if (err)
+    	res.status(500).send({message:`Error al guardar ${err}`})
+      res.status(200).send({Levels: createLevels})
+  })
+
+})
+
+app.post('/api/create/student', function(req, res) {
 
   let students = new Students()
   students.name = req.body.name
-  students.level = req.body.level
-  students.rut = req.body.rut
+  students.lastname = req.body.lastname
+  students.DNI = req.body.DNI
   students.genere = req.body.genere
 
-  students.save((err, createStudent) => {
+  students.save((err, createStudents) => {
     if (err)
     	res.status(500).send({message:`Error al guardar ${err}`})
-      res.status(200).send({Student: createStudent})
+      res.status(200).send({Students: createStudents})
   })
 
 })

@@ -6,8 +6,8 @@ const Schema = mongoose.Schema
 const LevelSchema = Schema ({
 	number: Number,
 	letter: String,
-	count: Number,
-	cicle: Number
+    cicle: String,
+    students: [{}]
 })
 
-module.exports = mongoose.model('Level', LevelSchema)
+module.exports = mongoose.model('Levels', LevelSchema)
