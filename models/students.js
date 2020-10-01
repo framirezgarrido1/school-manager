@@ -10,4 +10,4 @@ const StudentsSchema = Schema ({
 	genere: String
 })
 
-module.exports = mongoose.model('Students', StudentsSchema)
+module.exports = mongoose.model('Student', StudentsSchema)

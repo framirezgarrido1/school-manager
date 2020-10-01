@@ -2,12 +2,13 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const Student = mongoose.model('Student')
 
 const LevelSchema = Schema ({
 	number: Number,
 	letter: String,
     cicle: String,
-    students: [{}]
+    student: { type: Schema.ObjectId, ref: "Student" } 
 })
 
-module.exports = mongoose.model('Levels', LevelSchema)
+module.exports = mongoose.model('Level', LevelSchema)
