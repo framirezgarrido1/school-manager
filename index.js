@@ -106,10 +106,15 @@ app.post('/api/create/level', function(req, res) {
 app.post('/api/create/student', function(req, res) {
 
   let students = new Student()
-  students.name = req.body.name
-  students.lastname = req.body.lastname
+  students.names = req.body.name
+  students.fatherLastname = req.body.fatherLastname
+  students.motherLastname = req.body.motherLastname
   students.DNI = req.body.DNI
+  students.birthDate = req.body.birthDate
   students.genere = req.body.genere
+  students.nationality = req.body.nationality
+  students.email = req.body.email
+  students.phone = req.body.phone
 
   students.save((err, student) => {
     if (err)
