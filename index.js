@@ -27,13 +27,39 @@ app.get('/api', function(req, res) {
 });	
 
 
-app.get('/api/students', function(req, res) {
+app.get('/api/students/all', function(req, res) {
 
 	Student.find((err, students ) => {
 		if (err) return res.status(500).send({ message: `Error al realizar la petición` })
 		if (!students) return res.status(500).send({ message: `No existen usuarios` })
 
-		res.status(200).send({students})
+		res.status(200).send(students)
+	})
+
+});	
+
+app.get('/api/students/:level', function(req, res) {
+
+  let level = req.params.level
+
+	Student.find({codGrado:level}, (err, students ) => {
+		if (err) return res.status(500).send({ message: `Error al realizar la petición` })
+		if (!students) return res.status(500).send({ message: `No existen usuarios` })
+
+		res.status(200).send(students)
+	})
+
+});	
+
+app.get('/api/students/only/:id', function(req, res) {
+
+  let id = req.params.id
+
+	Student.find({_id:id}, (err, students ) => {
+		if (err) return res.status(500).send({ message: `Error al realizar la petición` })
+		if (!students) return res.status(500).send({ message: `No existen usuarios` })
+
+		res.status(200).send(students)
 	})
 
 });	
@@ -71,7 +97,7 @@ app.delete('/api/delete/students', function(req, res) {
 		if (err) return res.status(500).send({ message: `Error al realizar la petición` })
 		if (!students) return res.status(500).send({ message: `No existen usuarios` })
 
-		res.status(200).send({students})
+		res.status(200).send(students)
 	})
 
 });	
@@ -86,6 +112,24 @@ app.delete('/api/delete/levels', function(req, res) {
 	})
 
 });	
+
+
+app.post('/api/update/:student/:data/:value', function(req, res) {
+
+  let student = req.params.student
+  let data = req.params.data
+  let value = req.params.value
+
+  var obj = {};            // create object
+  obj[data] = value;  // set value
+
+  Student.findByIdAndUpdate(req.params.student, obj, (err, students) => {
+    if (err)
+    	res.status(500).send({message:`Error al guardar ${err}`})
+      res.status(200).send(students)
+  })
+
+})
 
 app.post('/api/create/level', function(req, res) {
 
@@ -106,7 +150,9 @@ app.post('/api/create/level', function(req, res) {
 app.post('/api/create/student', function(req, res) {
 
   let students = new Student()
-  students.names = req.body.name
+  students.level = req.body.level
+  students.letterLevel = req.body.letterLevel
+  students.names = req.body.names
   students.fatherLastname = req.body.fatherLastname
   students.motherLastname = req.body.motherLastname
   students.DNI = req.body.DNI
@@ -119,12 +165,12 @@ app.post('/api/create/student', function(req, res) {
   students.save((err, student) => {
     if (err)
     	res.status(500).send({message:`Error al guardar ${err}`})
-      res.status(200).send({student})
+      res.status(200).send(student)
   })
 
 })
 
-mongoose.connect('mongodb://localhost/'+dbName,{ useNewUrlParser: true }).then(() => {
+mongoose.connect('mongodb+srv://Fernando:Amelia0920@cluster0.caoxf.mongodb.net/schoolManagerDB?retryWrites=true&w=majority',{ useNewUrlParser: true }).then(() => {
   console.log("Connected to Database", dbName);
 
   app.listen(port, () => {

@@ -4,6 +4,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const StudentsSchema = Schema ({
+	codGrado: Number,
+	letterLevel: String,
 	names: String,
 	fatherLastname: String,
 	motherLastname: String,
@@ -12,7 +14,7 @@ const StudentsSchema = Schema ({
 	genere: String,
 	nationality: String,
 	email: String,
-	phone: String,
+	celular: String,
 })
 
 module.exports = mongoose.model('Student', StudentsSchema)
